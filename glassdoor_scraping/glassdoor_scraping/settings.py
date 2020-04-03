@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for book_scraping project
+# Scrapy settings for glassdoor_scraping project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,13 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "book_scraping"
+BOT_NAME = "glassdoor_scraping"
 
-SPIDER_MODULES = ["book_scraping.spiders"]
-NEWSPIDER_MODULE = "book_scraping.spiders"
+SPIDER_MODULES = ["glassdoor_scraping.spiders"]
+NEWSPIDER_MODULE = "glassdoor_scraping.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'book_scraping (+http://www.yourdomain.com)'
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36"
 
 # Obey robots.txt rules
@@ -48,13 +47,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 # SPIDER_MIDDLEWARES = {
-#    'book_scraping.middlewares.BookScrapingSpiderMiddleware': 543,
+#    'glassdoor_scraping.middlewares.GlassdoorScrapingSpiderMiddleware': 543,
 # }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-#    'book_scraping.middlewares.BookScrapingDownloaderMiddleware': 543,
+#    'glassdoor_scraping.middlewares.GlassdoorScrapingDownloaderMiddleware': 543,
 # }
 
 # Enable or disable extensions
@@ -66,7 +65,7 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # ITEM_PIPELINES = {
-#    'book_scraping.pipelines.BookScrapingPipeline': 300,
+#    'glassdoor_scraping.pipelines.GlassdoorScrapingPipeline': 300,
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
