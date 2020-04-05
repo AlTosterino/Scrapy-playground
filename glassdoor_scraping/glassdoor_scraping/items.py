@@ -6,9 +6,13 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+import json
+from collections import OrderedDict
 
 
 class GlassdoorScrapingItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    """Iten for glassdoor spider"""
+
+    job = scrapy.Field()
+    description = scrapy.Field()
+    fields_to_export = ("job", "description")
