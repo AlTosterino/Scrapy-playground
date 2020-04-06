@@ -4,6 +4,7 @@ python:
 install:
   - pip install pipenv
   - pipenv install --dev
+  - pipenv install --dev codecov
 script:
   - scrapy check
   - coverage run --source='.' -m unittest discover --verbose
