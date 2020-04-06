@@ -1,0 +1,5 @@
+[run]
+omit =
+    *middlewares.py
+    *settings.py
+    *__init__.py*

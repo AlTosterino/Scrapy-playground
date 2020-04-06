@@ -6,4 +6,5 @@ install:
   - pipenv install
 script:
   - scrapy check
-  - python -m unittest discover --verbose
+  - coverage run --source='.' -m unittest discover --verbose
+  - codecov
