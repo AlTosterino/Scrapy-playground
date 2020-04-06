@@ -5,5 +5,5 @@ install:
   - pip install pipenv
   - pipenv install
 script:
-  - run scrapy check
-  - run python -m unittest discover --verbose
+  - scrapy check
+  - python -m unittest discover --verbose
