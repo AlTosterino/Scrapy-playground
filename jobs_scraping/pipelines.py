@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 
-# Define your item pipelines here
-#
+
+import os
+
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 from datetime import datetime
+
+# Define your item pipelines here
+#
 from scrapy.exporters import CsvItemExporter
-from glassdoor_scraping import GlassdoorScrapingItem
+
+from jobs_scraping import GlassdoorScrapingItem
 
 
 class GlassdoorScrapingPipeline:
 
-    file_name = datetime.now().strftime("%m-%d-%Y %H-%M-%S")
-    file = None
+    file_name: str = datetime.now().strftime("%m-%d-%Y %H-%M-%S")
+    file: object = None
 
     def process_item(self, item, spider):
         item["country"] = "USA"
@@ -24,8 +29,11 @@ class GlassdoorScrapingPipeline:
         self.exporter = CsvItemExporter(self.file)
         self.exporter.fields_to_export = GlassdoorScrapingItem.fields_to_export
         self.exporter.start_exporting()
-        pass
 
     def close_spider(self, spider):
+        file_path = os.path.realpath(self.file.name)
         self.exporter.finish_exporting()
         self.file.close()
+        # Delete file if empty (More usable for testing etc.)
+        if not os.path.getsize(file_path):
+            os.remove(file_path)

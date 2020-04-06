@@ -6,8 +6,6 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-import json
-from collections import OrderedDict
 
 
 class GlassdoorScrapingItem(scrapy.Item):
