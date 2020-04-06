@@ -15,6 +15,7 @@ class GlassdoorScrapingPipeline:
     file = None
 
     def process_item(self, item, spider):
+        item["country"] = "USA"
         self.exporter.export_item(item)
 
     def open_spider(self, spider):

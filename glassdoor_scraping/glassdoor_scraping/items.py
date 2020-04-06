@@ -13,6 +13,9 @@ from collections import OrderedDict
 class GlassdoorScrapingItem(scrapy.Item):
     """Iten for glassdoor spider"""
 
-    job = scrapy.Field()
-    description = scrapy.Field()
-    fields_to_export = ("job", "description")
+    position = scrapy.Field()
+    url = scrapy.Field()
+    company = scrapy.Field()
+    location = scrapy.Field()
+    country = scrapy.Field()
+    fields_to_export = ("position", "url", "company", "location", "country")
