@@ -1,4 +1,4 @@
-from glassdoor_scraping import GlassdoorScrapingItem
+from jobs_scraping import GlassdoorScrapingItem
 import unittest
 
 ("position", "url", "company", "location", "country")

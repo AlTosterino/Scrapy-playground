@@ -11,11 +11,11 @@ class GlassdoorSpider(CrawlSpider):
     """Spider for extracting Python job offers from Glassdoor"""
 
     name = "glassdoor_spider"
+    file_name = "Glassdoor"
 
     start_urls = ["https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm"]
     base_url = "https://www.glassdoor.com/"
-    current_page = 1
-    max_pages = 1
+    max_page = 1
 
     rules = (
         Rule(
@@ -26,10 +26,13 @@ class GlassdoorSpider(CrawlSpider):
     )
 
     custom_settings = {
-        "ITEM_PIPELINES": {
-            "glassdoor_scraping.pipelines.GlassdoorScrapingPipeline": 300
-        },
+        "ITEM_PIPELINES": {"jobs_scraping.pipelines.GlassdoorScrapingPipeline": 300},
     }
+
+    def __init__(self, *args, **kwargs):
+        self.current_page = kwargs.get("start_page", 1)
+        self.max_page = kwargs.get("stop_page", 1)
+        super().__init__(*args, **kwargs)
 
     def parse_page(self, response):
         """Method for gathering job links
@@ -38,7 +41,7 @@ class GlassdoorSpider(CrawlSpider):
 
         @returns requests 60
         """
-        if self.current_page > self.max_pages:
+        if self.current_page > self.max_page:
             raise CloseSpider("Spider has reached maximum number of pages")
         self.current_page += 1
         links = response.css("a.jobLink.jobInfoItem.jobTitle::attr(href)").getall()

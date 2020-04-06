@@ -24,7 +24,7 @@ class GlassdoorScrapingPipeline:
         self.exporter.export_item(item)
 
     def open_spider(self, spider):
-        self.file_name = f"{spider.name} {self.file_name}.csv"
+        self.file_name = f"{spider.file_name} {self.file_name}.csv"
         self.file = open(self.file_name, "wb")
         self.exporter = CsvItemExporter(self.file)
         self.exporter.fields_to_export = GlassdoorScrapingItem.fields_to_export
