@@ -6,9 +6,6 @@ from scrapy.exceptions import CloseSpider
 from scrapy.http import Response
 from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
 
-
-os.environ["PRODUCTION_TESTS"] = "0"
-
 # * Use this for production setting (Cache for e.g. 2/3 days)
 # "HTTPCACHE_POLICY": "scrapy.extensions.httpcache.DummyPolicy",
 # "HTTPCACHE_STORAGE": "scrapy.extensions.httpcache.FilesystemCacheStorage",
@@ -20,9 +17,6 @@ os.environ["PRODUCTION_TESTS"] = "0"
 # "HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS": ["no-cache", "no-store"],
 
 
-@unittest.skipIf(
-    bool(int(os.environ.get("PRODUCTION_TESTS"))), "Skipping development tests"
-)
 class GlassdoorSpiderTests(unittest.TestCase):
     def setUp(self):
         self.spider = GlassdoorSpider()
@@ -52,10 +46,13 @@ class GlassdoorSpiderTests(unittest.TestCase):
     def test_closing_spider_when_max_page_reached(self):
         self.spider.current_page = 2
         self.spider.max_page = 1
+        test_links = ("/test1", "/test2")
         response_mock = Mock(spec=Response)
+        response_mock.css().getall.return_value = test_links
         self.spider.parse_page(response_mock)
         with self.assertRaises(CloseSpider):
             [*self.spider.parse_page(response_mock)]
+        response_mock.css().getall.assert_called_once()
 
     def test_spider_parse_page_yields_correct_links(self):
         response_mock = Mock(spec=Response)
