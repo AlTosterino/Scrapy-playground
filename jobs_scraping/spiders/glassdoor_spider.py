@@ -40,13 +40,13 @@ class GlassdoorSpider(CrawlSpider):
 
         @returns requests 60
         """
-        if self.current_page > self.max_page:
-            raise CloseSpider("Spider has reached maximum number of pages")
-        self.current_page += 1
         links = response.css("a.jobLink.jobInfoItem.jobTitle::attr(href)").getall()
         for link in links:
             absolute_url = self.base_url + link[1:]
             yield scrapy.Request(absolute_url, callback=self.parse_job)
+        if self.current_page > self.max_page:
+            raise CloseSpider("Spider has reached maximum number of pages")
+        self.current_page += 1
 
     def parse_job(self, response):
         """Method for gathering specific job information

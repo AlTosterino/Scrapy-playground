@@ -15,6 +15,8 @@ from jobs_scraping import GlassdoorScrapingItem
 
 
 class CSVExportPipeline:
+    """Class for exporting scrapped items to CSV file"""
+
     def __init__(self):
         self.file_name = datetime.now().strftime("%m-%d-%Y %H-%M-%S")
         self.file = None
@@ -22,9 +24,8 @@ class CSVExportPipeline:
 
     def process_item(self, item, spider):
         item["country"] = "USA"
-        self.exporter.export_item(
-            item
-        )  # This return prints  to stdout, so comment have clear log
+        self.exporter.export_item(item)
+        # This return prints  to stdout, so comment have clear log
         # return item
 
     def open_spider(self, spider):
