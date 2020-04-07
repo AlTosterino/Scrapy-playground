@@ -22,8 +22,10 @@ class CSVExportPipeline:
 
     def process_item(self, item, spider):
         item["country"] = "USA"
-        self.exporter.export_item(item)
-        return item
+        self.exporter.export_item(
+            item
+        )  # This return prints  to stdout, so comment have clear log
+        # return item
 
     def open_spider(self, spider):
         self.file_name = f"{spider.file_name} {self.file_name}.csv"
