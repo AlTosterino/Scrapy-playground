@@ -1,8 +1,6 @@
 from jobs_scraping import GlassdoorScrapingItem
 import unittest
 
-("position", "url", "company", "location", "country")
-
 
 class GlassdoorScrapingItemTests(unittest.TestCase):
     def test_all_values_are_setup_correctly(self):

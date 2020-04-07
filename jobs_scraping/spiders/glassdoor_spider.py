@@ -15,7 +15,6 @@ class GlassdoorSpider(CrawlSpider):
 
     start_urls = ["https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm"]
     base_url = "https://www.glassdoor.com/"
-    max_page = 1
 
     rules = (
         Rule(
@@ -26,7 +25,7 @@ class GlassdoorSpider(CrawlSpider):
     )
 
     custom_settings = {
-        "ITEM_PIPELINES": {"jobs_scraping.pipelines.GlassdoorScrapingPipeline": 300},
+        "ITEM_PIPELINES": {"jobs_scraping.pipelines.CSVExportPipeline": 300},
     }
 
     def __init__(self, *args, **kwargs):
@@ -59,7 +58,7 @@ class GlassdoorSpider(CrawlSpider):
         @scrapes position company location url
         """
         item = GlassdoorScrapingItem()
-        item["position"] = response.css("h2.mt-0.mb-xsm.strong::text").getall()
+        item["position"] = response.css("h2.mt-0.mb-xsm.strong::text").get()
         item["company"] = response.css("span.strong.ib::text").get()
         item["location"] = response.css("span.subtle.ib::text").getall()[1]
         item["url"] = response.url

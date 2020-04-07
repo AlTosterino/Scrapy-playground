@@ -3,7 +3,7 @@ import unittest
 from mock import Mock
 
 from scrapy.exceptions import CloseSpider
-from scrapy.http import Request, Response
+from scrapy.http import Response
 from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
 
 
@@ -44,24 +44,35 @@ class GlassdoorSpiderTests(unittest.TestCase):
     def test_base_url_is_substring_for_start_urls(self):
         for link in self.spider.start_urls:
             self.assertTrue(self.spider.base_url in link)
+            self.assertTrue(link.startswith(self.spider.base_url))
 
     def test_file_name_for_spider_is_not_empty(self):
         self.assertIsNotNone(self.spider.file_name)
 
     def test_closing_spider_when_max_page_reached(self):
-        spider = GlassdoorSpider()
-        spider.current_page = 2
-        spider.max_page = 1
+        self.spider.current_page = 2
+        self.spider.max_page = 1
         response_mock = Mock(spec=Response)
-        spider.parse_page(response_mock)
+        self.spider.parse_page(response_mock)
         with self.assertRaises(CloseSpider):
-            [*spider.parse_page(response_mock)]
+            [*self.spider.parse_page(response_mock)]
 
     def test_spider_parse_page_yields_correct_links(self):
-        spider = GlassdoorSpider()
         response_mock = Mock(spec=Response)
         test_links = ("/test1", "/test2")
         response_mock.css().getall.return_value = test_links
-        spider.parse_page(response_mock)
-        for link in zip([*spider.parse_page(response_mock)], test_links):
-            self.assertEqual(link[0].url, f"{spider.base_url}{link[1][1:]}")
+        self.spider.parse_page(response_mock)
+        for link in zip([*self.spider.parse_page(response_mock)], test_links):
+            with self.subTest(i=link[1]):
+                self.assertEqual(link[0].url, f"{self.spider.base_url}{link[1][1:]}")
+
+    def test_spider_parse_job_yields_correct_item(self):
+        response_mock = Mock(spec=Response)
+        response_mock.css().get.return_value = "Test Value"
+        response_mock.css().getall.return_value = ["Test Value1", "Test Value2"]
+        response_mock.url = "http://testsite.com"
+        item = [*self.spider.parse_job(response_mock)][0]
+        self.assertEqual(item["company"], "Test Value")
+        self.assertEqual(item["location"], "Test Value2")
+        self.assertEqual(item["position"], "Test Value")
+        self.assertEqual(item["url"], "http://testsite.com")

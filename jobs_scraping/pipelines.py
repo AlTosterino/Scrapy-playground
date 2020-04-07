@@ -14,14 +14,16 @@ from scrapy.exporters import CsvItemExporter
 from jobs_scraping import GlassdoorScrapingItem
 
 
-class GlassdoorScrapingPipeline:
-
-    file_name: str = datetime.now().strftime("%m-%d-%Y %H-%M-%S")
-    file: object = None
+class CSVExportPipeline:
+    def __init__(self):
+        self.file_name = datetime.now().strftime("%m-%d-%Y %H-%M-%S")
+        self.file = None
+        super().__init__()
 
     def process_item(self, item, spider):
         item["country"] = "USA"
         self.exporter.export_item(item)
+        return item
 
     def open_spider(self, spider):
         self.file_name = f"{spider.file_name} {self.file_name}.csv"
