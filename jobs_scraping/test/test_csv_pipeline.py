@@ -28,8 +28,7 @@ class CSVExportPipelineTests(unittest.TestCase):
         self.csvpipeline.exporter = exporter_mock
         item_mock = MagicMock(spec=GlassdoorScrapingItem)
         spider_mock = Mock(spec=GlassdoorSpider)
-        item_return = process_item_mock(item_mock, spider_mock)
-        self.assertEqual(item_mock, item_return)
+        process_item_mock(item_mock, spider_mock)
         process_item_mock.assert_called_once_with(item_mock, spider_mock)
         exporter_mock.export_item.assert_called_once_with(item_mock)
 
