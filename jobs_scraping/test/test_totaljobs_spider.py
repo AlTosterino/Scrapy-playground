@@ -1,4 +1,3 @@
-import os
 import unittest
 from mock import Mock
 
@@ -39,7 +38,7 @@ class TotaljobsSpiderTests(unittest.TestCase):
         self.spider.max_page = 1
         response_mock = Mock(spec=Response)
         with self.assertRaises(CloseSpider):
-            [*self.spider.parse_item(response_mock)]
+            _ = [*self.spider.parse_item(response_mock)]
         response_mock.css().getall.assert_not_called()
 
     def test_parse_start_url_returns_parse_page(self):

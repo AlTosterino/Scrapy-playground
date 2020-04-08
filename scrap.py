@@ -7,14 +7,15 @@ from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
 
 
 class MultipleCrawlers:
-    """Class for starting multiple crawlers in the same process"""
+    """Class for starting multiple crawlers in the same process."""
 
     def __init__(self):
+        """Setting up process."""
         self.process = CrawlerProcess(get_project_settings())
 
     def create_crawlers(self, spiders: Tuple[Tuple[object, dict]]) -> None:
-        """Method for defining crawlers for process
-        
+        """Method for defining crawlers for process.
+
         Arguments:
             spiders {Tuple[Tuple[object, dict]]} -- A tuple of tuples, e.g. ((Spider, {}), (Spider2, {'key': 'value}))
         """
@@ -23,7 +24,7 @@ class MultipleCrawlers:
             self.process.crawl(spider, **keywords)
 
     def start_crawling(self) -> None:
-        """Method for starting process of scrapping"""
+        """Method for starting process of scrapping."""
         self.process.start()
 
 

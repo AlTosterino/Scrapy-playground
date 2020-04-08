@@ -4,7 +4,7 @@ from scrapy.exceptions import CloseSpider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
-from jobs_scraping import JobItem
+from jobs_scraping.items import JobItem
 
 
 class GlassdoorSpider(CrawlSpider):
@@ -30,15 +30,17 @@ class GlassdoorSpider(CrawlSpider):
     }
 
     def __init__(self, *args, **kwargs):
+        """Setting up current page and max page."""
         self.current_page = kwargs.get("start_page", 1)
         self.max_page = kwargs.get("stop_page", 1)
         super().__init__(*args, **kwargs)
 
     def parse_start_url(self, response):
+        """Method for correctly scrapping first page from website."""
         return self.parse_page(response)
 
     def parse_page(self, response):
-        """Method for gathering job links
+        """Method for gathering job links.
 
         @url https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm
 
@@ -53,7 +55,7 @@ class GlassdoorSpider(CrawlSpider):
         self.current_page += 1
 
     def parse_job(self, response):
-        """Method for gathering specific job information
+        """Method for gathering specific job information.
         
         @url https://www.glassdoor.com/job-listing/fullstack-python-engineer-streetshares-JV_IC1130404_KO0,25_KE26,38.htm?jl=3147380862&ctt=1586168334926
 

@@ -1,4 +1,4 @@
-from jobs_scraping import JobItem
+from jobs_scraping.items import JobItem
 import unittest
 
 

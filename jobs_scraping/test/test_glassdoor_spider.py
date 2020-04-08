@@ -1,4 +1,3 @@
-import os
 import unittest
 from mock import Mock
 
@@ -49,7 +48,7 @@ class GlassdoorSpiderTests(unittest.TestCase):
         self.spider.max_page = 1
         response_mock = Mock(spec=Response)
         with self.assertRaises(CloseSpider):
-            [*self.spider.parse_page(response_mock)]
+            _ = [*self.spider.parse_page(response_mock)]
         response_mock.css().getall.assert_not_called()
 
     def test_parse_start_url_returns_parse_page(self):

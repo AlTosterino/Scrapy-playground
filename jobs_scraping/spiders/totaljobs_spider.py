@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-import scrapy
 import w3lib.html
 from scrapy.exceptions import CloseSpider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
-from jobs_scraping import JobItem
+from jobs_scraping.items import JobItem
 
 
 class TotaljobsSpider(CrawlSpider):
-    """Spider for extracting Python job offers from Glassdoor"""
+    """Spider for extracting Python job offers from Totaljobs"""
 
     name = "totaljobs_spider"
     file_name = "Totaljobs"
@@ -32,11 +31,13 @@ class TotaljobsSpider(CrawlSpider):
     }
 
     def __init__(self, *args, **kwargs):
+        """Setting up current page and max page."""
         self.current_page = kwargs.get("start_page", 1)
         self.max_page = kwargs.get("stop_page", 1)
         super().__init__(*args, **kwargs)
 
     def parse_start_url(self, response):
+        """Method for correctly scrapping first page from website."""
         return self.parse_item(response)
 
     def parse_item(self, response):

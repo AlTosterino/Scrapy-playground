@@ -9,7 +9,7 @@ import scrapy
 
 
 class JobItem(scrapy.Item):
-    """Iten for glassdoor spider"""
+    """Iten for glassdoor spider."""
 
     position = scrapy.Field()
     url = scrapy.Field()

@@ -11,13 +11,14 @@ from datetime import datetime
 #
 from scrapy.exporters import CsvItemExporter
 
-from jobs_scraping import JobItem
+from jobs_scraping.items import JobItem
 
 
 class CSVExportPipeline:
-    """Class for exporting scrapped items to CSV file"""
+    """Class for exporting scrapped items to CSV file."""
 
     def __init__(self):
+        """Setting up file and file_name based on current date and time."""
         self.file_name = datetime.now().strftime("%m-%d-%Y %H-%M-%S")
         self.file = None
         super().__init__()
