@@ -8,7 +8,7 @@ from jobs_scraping.items import JobItem
 
 
 class TotaljobsSpider(CrawlSpider):
-    """Spider for extracting Python job offers from Totaljobs"""
+    """Spider for extracting Python job offers from Totaljobs."""
 
     name = "totaljobs_spider"
     file_name = "Totaljobs"
@@ -41,7 +41,8 @@ class TotaljobsSpider(CrawlSpider):
         return self.parse_item(response)
 
     def parse_item(self, response):
-        """Method for scraping jobs.
+        """
+        Method for scraping jobs.
 
         @url https://www.totaljobs.com/jobs/python
 

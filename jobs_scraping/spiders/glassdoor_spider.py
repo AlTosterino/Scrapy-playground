@@ -8,7 +8,7 @@ from jobs_scraping.items import JobItem
 
 
 class GlassdoorSpider(CrawlSpider):
-    """Spider for extracting Python job offers from Glassdoor"""
+    """Spider for extracting Python job offers from Glassdoor."""
 
     name = "glassdoor_spider"
     file_name = "Glassdoor"
@@ -40,7 +40,8 @@ class GlassdoorSpider(CrawlSpider):
         return self.parse_page(response)
 
     def parse_page(self, response):
-        """Method for gathering job links.
+        """
+        Method for gathering job links.
 
         @url https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm
 
@@ -55,7 +56,8 @@ class GlassdoorSpider(CrawlSpider):
         self.current_page += 1
 
     def parse_job(self, response):
-        """Method for gathering specific job information.
+        """
+        ethod for gathering specific job information.
         
         @url https://www.glassdoor.com/job-listing/fullstack-python-engineer-streetshares-JV_IC1130404_KO0,25_KE26,38.htm?jl=3147380862&ctt=1586168334926
 

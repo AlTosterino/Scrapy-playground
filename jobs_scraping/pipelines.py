@@ -15,6 +15,7 @@ from jobs_scraping.items import JobItem
 
 
 class CSVExportPipeline:
+
     """Class for exporting scrapped items to CSV file."""
 
     def __init__(self):
