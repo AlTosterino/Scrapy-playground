@@ -10,6 +10,16 @@ class TotaljobsSpiderTests(unittest.TestCase):
     def setUp(self):
         self.spider = TotaljobsSpider()
 
+    def test_file_name_is_initialized(self):
+        spider = TotaljobsSpider()
+        self.assertIsNotNone(spider.file_name)
+        self.assertEqual(spider.file_name, "Totaljobs")
+
+    def test_file_name_can_be_initialized(self):
+        spider = TotaljobsSpider(file_name="Test name")
+        self.assertIsNotNone(spider.file_name)
+        self.assertEqual(spider.file_name, "Test name")
+
     def test_start_page_is_1(self):
         self.assertEqual(self.spider.current_page, 1)
 

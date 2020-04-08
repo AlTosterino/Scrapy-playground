@@ -20,6 +20,16 @@ class GlassdoorSpiderTests(unittest.TestCase):
     def setUp(self):
         self.spider = GlassdoorSpider()
 
+    def test_file_name_is_initialized(self):
+        spider = GlassdoorSpider()
+        self.assertIsNotNone(spider.file_name)
+        self.assertEqual(spider.file_name, "Glassdoor")
+
+    def test_file_name_can_be_initialized(self):
+        spider = GlassdoorSpider(file_name="Test name")
+        self.assertIsNotNone(spider.file_name)
+        self.assertEqual(spider.file_name, "Test name")
+
     def test_start_page_is_1(self):
         self.assertEqual(self.spider.current_page, 1)
 
