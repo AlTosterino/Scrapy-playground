@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.com/AlTosterino/Scrapy-playground.svg?branch=master)](https://travis-ci.com/AlTosterino/Scrapy-playground)
-[![Code Grade](https://www.code-inspector.com/project/5583/status/svg)](https://frontend.code-inspector.com/public/project/5583/Scrapy-playground/dashboard)
-[![Code Score](https://www.code-inspector.com/project/5583/score/svg)](https://frontend.code-inspector.com/public/project/5583/Scrapy-playground/dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aa8164aba8f448d490d37a55f33d9ccb)](https://www.codacy.com/manual/AlTosterino/Scrapy-playground?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AlTosterino/Scrapy-playground&amp;utm_campaign=Badge_Grade)
 [![CodeCov](https://codecov.io/gh/AlTosterino/Scrapy-playground/branch/master/graph/badge.svg)](https://codecov.io/gh/AlTosterino/Scrapy-playground)
 
 # Scrapy-playground
