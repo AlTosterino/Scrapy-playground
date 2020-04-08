@@ -37,8 +37,9 @@ class GlassdoorSpiderTests(unittest.TestCase):
 
     def test_base_url_is_substring_for_start_urls(self):
         for link in self.spider.start_urls:
-            self.assertTrue(self.spider.base_url in link)
-            self.assertTrue(link.startswith(self.spider.base_url))
+            with self.subTest(i=link):
+                self.assertTrue(self.spider.base_url in link)
+                self.assertTrue(link.startswith(self.spider.base_url))
 
     def test_file_name_for_spider_is_not_empty(self):
         self.assertIsNotNone(self.spider.file_name)
@@ -46,13 +47,25 @@ class GlassdoorSpiderTests(unittest.TestCase):
     def test_closing_spider_when_max_page_reached(self):
         self.spider.current_page = 2
         self.spider.max_page = 1
-        test_links = ("/test1", "/test2")
         response_mock = Mock(spec=Response)
-        response_mock.css().getall.return_value = test_links
-        self.spider.parse_page(response_mock)
         with self.assertRaises(CloseSpider):
             [*self.spider.parse_page(response_mock)]
-        response_mock.css().getall.assert_called_once()
+        response_mock.css().getall.assert_not_called()
+
+    def test_parse_start_url_returns_parse_page(self):
+        response_mock = Mock(spec=Response)
+        test_links = ("/test1", "/test2")
+        response_mock.css().getall.return_value = test_links
+        data = [*self.spider.parse_start_url(response_mock)]
+        for link in zip(data, test_links):
+            with self.subTest(i=link[1]):
+                self.assertEqual(link[0].url, f"{self.spider.base_url}{link[1][1:]}")
+        # I don't know if these test are good :/
+        spider_mock = Mock(spec=GlassdoorSpider)
+        spider_mock.parse_start_url.return_value = spider_mock.parse_page(response_mock)
+        spider_mock.parse_start_url(response_mock)
+        spider_mock.parse_start_url.assert_called_once_with(response_mock)
+        spider_mock.parse_page.assert_called_once_with(response_mock)
 
     def test_spider_parse_page_yields_correct_links(self):
         response_mock = Mock(spec=Response)
@@ -73,3 +86,4 @@ class GlassdoorSpiderTests(unittest.TestCase):
         self.assertEqual(item["location"], "Test Value2")
         self.assertEqual(item["position"], "Test Value")
         self.assertEqual(item["url"], "http://testsite.com")
+        self.assertEqual(item["country"], "USA")
