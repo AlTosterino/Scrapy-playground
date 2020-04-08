@@ -11,7 +11,7 @@ from datetime import datetime
 #
 from scrapy.exporters import CsvItemExporter
 
-from jobs_scraping import GlassdoorScrapingItem
+from jobs_scraping import JobItem
 
 
 class CSVExportPipeline:
@@ -23,7 +23,6 @@ class CSVExportPipeline:
         super().__init__()
 
     def process_item(self, item, spider):
-        item["country"] = "USA"
         self.exporter.export_item(item)
         # This return prints  to stdout, so comment have clear log
         # return item
@@ -32,7 +31,7 @@ class CSVExportPipeline:
         self.file_name = f"{spider.file_name} {self.file_name}.csv"
         self.file = open(self.file_name, "wb")
         self.exporter = CsvItemExporter(self.file)
-        self.exporter.fields_to_export = GlassdoorScrapingItem.fields_to_export
+        self.exporter.fields_to_export = JobItem.fields_to_export
         self.exporter.start_exporting()
 
     def close_spider(self, spider):

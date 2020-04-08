@@ -1,1 +1,1 @@
-from .items import GlassdoorScrapingItem
+from .items import JobItem

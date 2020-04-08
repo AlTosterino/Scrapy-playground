@@ -1,10 +1,10 @@
-from jobs_scraping import GlassdoorScrapingItem
+from jobs_scraping import JobItem
 import unittest
 
 
-class GlassdoorScrapingItemTests(unittest.TestCase):
+class JobItemTests(unittest.TestCase):
     def test_all_values_are_setup_correctly(self):
-        item = GlassdoorScrapingItem()
+        item = JobItem()
         item["position"] = "Test position"
         item["url"] = "http://testurl.com"
         item["company"] = "Some test company"

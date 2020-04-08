@@ -8,7 +8,7 @@
 import scrapy
 
 
-class GlassdoorScrapingItem(scrapy.Item):
+class JobItem(scrapy.Item):
     """Iten for glassdoor spider"""
 
     position = scrapy.Field()

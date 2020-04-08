@@ -3,7 +3,7 @@ from mock import Mock, MagicMock, patch, mock_open
 from datetime import datetime
 
 from jobs_scraping.pipelines import CSVExportPipeline
-from jobs_scraping.items import GlassdoorScrapingItem
+from jobs_scraping.items import JobItem
 from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
 
 DATE_TIME = datetime(2020, 1, 1, 0, 0, 0)
@@ -26,7 +26,7 @@ class CSVExportPipelineTests(unittest.TestCase):
     def test_export_item_is_called_with_correct_item(self, exporter_mock):
         process_item_mock = Mock(side_effect=self.csvpipeline.process_item)
         self.csvpipeline.exporter = exporter_mock
-        item_mock = MagicMock(spec=GlassdoorScrapingItem)
+        item_mock = MagicMock(spec=JobItem)
         spider_mock = Mock(spec=GlassdoorSpider)
         process_item_mock(item_mock, spider_mock)
         process_item_mock.assert_called_once_with(item_mock, spider_mock)
@@ -52,8 +52,7 @@ class CSVExportPipelineTests(unittest.TestCase):
             )
             exporter_mock.assert_called_once()
             self.assertEqual(
-                csvpipeline.exporter.fields_to_export,
-                GlassdoorScrapingItem.fields_to_export,
+                csvpipeline.exporter.fields_to_export, JobItem.fields_to_export,
             )
             csvpipeline.exporter.start_exporting.assert_called_once()
 
