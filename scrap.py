@@ -3,7 +3,7 @@ from typing import Tuple
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
-from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
+from jobs_scraping.spiders import glassdoor_spider, totaljobs_spider
 
 
 class MultipleCrawlers:
@@ -33,16 +33,36 @@ class MultipleCrawlers:
 if __name__ == "__main__":  # pragma: no cover
     spiders = (
         (
-            GlassdoorSpider,
+            glassdoor_spider.GlassdoorSpider,
             {
                 "start_urls": [
                     "https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm"
-                ]
+                ],
+                "file_name": "Glassdoor PYTHON",
             },
         ),
         (
-            GlassdoorSpider,
-            {"start_urls": ["https://www.glassdoor.com/Job/react-jobs-SRCH_KO0,5.htm"]},
+            glassdoor_spider.GlassdoorSpider,
+            {
+                "start_urls": [
+                    "https://www.glassdoor.com/Job/react-jobs-SRCH_KO0,5.htm"
+                ],
+                "file_name": "Glassdoor REACT",
+            },
+        ),
+        (
+            totaljobs_spider.TotaljobsSpider,
+            {
+                "start_urls": ["https://www.totaljobs.com/jobs/python"],
+                "file_name": "Totaljobs PYTHON",
+            },
+        ),
+        (
+            totaljobs_spider.TotaljobsSpider,
+            {
+                "start_urls": ["https://www.totaljobs.com/jobs/react"],
+                "file_name": "Totaljobs REACT",
+            },
         ),
     )
     multiple_crawlers = MultipleCrawlers()
