@@ -8,6 +8,7 @@ from jobs_scraping.items import JobItem
 
 
 class TotaljobsSpider(CrawlSpider):
+
     """Spider for extracting Python job offers from Totaljobs."""
 
     name = "totaljobs_spider"

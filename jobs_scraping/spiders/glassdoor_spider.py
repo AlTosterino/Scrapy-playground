@@ -57,7 +57,7 @@ class GlassdoorSpider(CrawlSpider):
 
     def parse_job(self, response):
         """
-        ethod for gathering specific job information.
+        Method for gathering specific job information.
         
         @url https://www.glassdoor.com/job-listing/fullstack-python-engineer-streetshares-JV_IC1130404_KO0,25_KE26,38.htm?jl=3147380862&ctt=1586168334926
 
