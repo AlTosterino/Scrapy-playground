@@ -10,4 +10,4 @@ script:
   - coverage run --source='.' -m unittest discover --verbose
   - codecov
   - coverage xml -o cobertura.xml
-  - wget -qO - https://coverage.codacy.com/get.sh | sh
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
