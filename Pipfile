@@ -9,6 +9,7 @@ pylint = "*"
 mock = "*"
 rope = "*"
 coverage = "*"
+pytest = "*"
 
 [packages]
 twisted = "*"

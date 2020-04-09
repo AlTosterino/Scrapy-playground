@@ -7,7 +7,7 @@ install:
   - pipenv install --dev codecov
 script:
   - scrapy check
-  - coverage run --source='.' -m unittest discover --verbose
+  - coverage run --source='.' -m pytest -v
   - codecov
   - coverage xml -o cobertura.xml
   - bash <(curl -Ls https://coverage.codacy.com/get.sh)
