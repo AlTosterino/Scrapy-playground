@@ -54,14 +54,14 @@ if __name__ == "__main__":  # pragma: no cover
             indeed_spider.IndeedSpider,
             {
                 "start_urls": ["https://indeed.com/q-q-Python-jobs.html"],
-                "file_name": "Totaljobs PYTHON",
+                "file_name": "Indeed PYTHON",
             },
         ),
         (
             indeed_spider.IndeedSpider,
             {
                 "start_urls": ["https://indeed.com/q-q-React-jobs.html"],
-                "file_name": "Totaljobs REACT",
+                "file_name": "Indeed REACT",
             },
         ),
     )

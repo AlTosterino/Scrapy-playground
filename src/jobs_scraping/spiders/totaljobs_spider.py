@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import w3lib.html
 import scrapy
+import random
 from scrapy.exceptions import CloseSpider
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
+
 
 from jobs_scraping.items import JobItem
 
@@ -52,9 +54,9 @@ class TotaljobsSpider(CrawlSpider):
     def __init__(self, *args, **kwargs):
         """Setting up current page and max page."""
         self.file_name = kwargs.get("filename", self.file_name)
-        self.max_page = kwargs.get("stop_page", 1)
+        self.max_page = kwargs.get("stop_page", 10)
 
-        self.current_page = kwargs.get("start_page", 1)
+        self.current_page = 1
         super().__init__(*args, **kwargs)
 
     def parse_start_url(self, response):

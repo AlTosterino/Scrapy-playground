@@ -11,3 +11,6 @@ ci-test:
 	cd src && pipenv run scrapy check
 	pipenv run coverage run --source='.' -m pytest -v
 	pipenv run coverage xml -o cobertura.xml
+
+run-spider:
+	cd src && pipenv run scrapy crawl $(SPIDER)
