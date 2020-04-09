@@ -1,7 +1,11 @@
-from jobs_scraping.items import JobItem
 import unittest
 
+import pytest
 
+from jobs_scraping.items import JobItem
+
+
+@pytest.mark.job_item
 class JobItemTests(unittest.TestCase):
     def test_all_values_are_setup_correctly(self):
         item = JobItem()

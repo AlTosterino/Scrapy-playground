@@ -35,8 +35,9 @@ class IndeedSpider(CrawlSpider):
     def __init__(self, *args, **kwargs):
         """Setting up current page and max page."""
         self.file_name = kwargs.get("filename", self.file_name)
-        self.current_page = kwargs.get("start_page", 1)
         self.max_page = kwargs.get("stop_page", 1)
+
+        self.current_page = 1
         super().__init__(*args, **kwargs)
 
     def parse_start_url(self, response):

@@ -1,4 +1,5 @@
 import unittest
+import pytest
 from mock import Mock, MagicMock, patch, mock_open
 from datetime import datetime
 
@@ -9,6 +10,7 @@ from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
 DATE_TIME = datetime(2020, 1, 1, 0, 0, 0)
 
 
+@pytest.mark.csv_pipeline
 class CSVExportPipelineTests(unittest.TestCase):
     def setUp(self):
         self.csvpipeline = CSVExportPipeline()

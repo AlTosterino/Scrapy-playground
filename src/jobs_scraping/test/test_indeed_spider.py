@@ -1,4 +1,5 @@
 import unittest
+import pytest
 from mock import Mock
 
 from scrapy.exceptions import CloseSpider
@@ -16,6 +17,7 @@ from jobs_scraping.spiders.indeed_spider import IndeedSpider
 # "HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS": ["no-cache", "no-store"],
 
 
+@pytest.mark.indeed_spider
 class IndeedSpiderTests(unittest.TestCase):
     def setUp(self):
         self.spider = IndeedSpider()
@@ -32,10 +34,6 @@ class IndeedSpiderTests(unittest.TestCase):
 
     def test_start_page_is_1(self):
         self.assertEqual(self.spider.current_page, 1)
-
-    def test_start_page_can_be_initialized(self):
-        spider = IndeedSpider(start_page=2)
-        self.assertEqual(spider.current_page, 2)
 
     def test_stop_page_is_1(self):
         self.assertEqual(self.spider.max_page, 1)

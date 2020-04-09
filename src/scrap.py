@@ -3,7 +3,7 @@ from typing import Tuple
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
-from jobs_scraping.spiders import glassdoor_spider, totaljobs_spider
+from jobs_scraping.spiders import glassdoor_spider, indeed_spider
 
 
 class MultipleCrawlers:
@@ -51,16 +51,16 @@ if __name__ == "__main__":  # pragma: no cover
             },
         ),
         (
-            totaljobs_spider.TotaljobsSpider,
+            indeed_spider.IndeedSpider,
             {
-                "start_urls": ["https://www.totaljobs.com/jobs/python"],
+                "start_urls": ["https://indeed.com/q-q-Python-jobs.html"],
                 "file_name": "Totaljobs PYTHON",
             },
         ),
         (
-            totaljobs_spider.TotaljobsSpider,
+            indeed_spider.IndeedSpider,
             {
-                "start_urls": ["https://www.totaljobs.com/jobs/react"],
+                "start_urls": ["https://indeed.com/q-q-React-jobs.html"],
                 "file_name": "Totaljobs REACT",
             },
         ),
