@@ -3,25 +3,25 @@ from mock import Mock
 
 from scrapy.exceptions import CloseSpider
 from scrapy.http import Response
-from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
+from jobs_scraping.spiders.workpolis_spider import WorkpolisSpider
 
-pytestmark = pytest.mark.glassdoor_spider
+pytestmark = pytest.mark.workpolis_spider
 
 
 @pytest.fixture
 def spider():
-    spider = GlassdoorSpider()
+    spider = WorkpolisSpider()
     return spider
 
 
 def test_file_name_is_initialized():
-    spider = GlassdoorSpider()
+    spider = WorkpolisSpider()
     assert spider.file_name is not None
-    assert spider.file_name == "Glassdoor"
+    assert spider.file_name == "Workpolis"
 
 
 def test_file_name_can_be_initialized():
-    spider = GlassdoorSpider(file_name="Test name")
+    spider = WorkpolisSpider(file_name="Test name")
     assert spider.file_name is not None
     assert spider.file_name == "Test name"
 
@@ -35,7 +35,7 @@ def test_stop_page_is_1(spider):
 
 
 def test_stop_page_can_be_initialized():
-    spider = GlassdoorSpider(stop_page=2)
+    spider = WorkpolisSpider(stop_page=2)
     assert spider.max_page == 2
 
 
@@ -64,9 +64,9 @@ def test_parse_start_url_returns_parse_page(spider):
     response_mock.css().getall.return_value = test_links
     data = [*spider.parse_start_url(response_mock)]
     for link in zip(data, test_links):
-        assert link[0].url == f"{spider.base_url}{link[1][1:]}"
+        assert link[0].url == f"{spider.base_url}{link[1]}"
     # I don't know if these test are good :/
-    spider_mock = Mock(spec=GlassdoorSpider)
+    spider_mock = Mock(spec=WorkpolisSpider)
     spider_mock.parse_start_url.return_value = spider_mock.parse_page(response_mock)
     spider_mock.parse_start_url(response_mock)
     spider_mock.parse_start_url.assert_called_once_with(response_mock)
@@ -79,17 +79,16 @@ def test_spider_parse_page_yields_correct_links(spider):
     response_mock.css().getall.return_value = test_links
     spider.parse_page(response_mock)
     for link in zip([*spider.parse_page(response_mock)], test_links):
-        link[0].url == f"{spider.base_url}{link[1][1:]}"
+        link[0].url == f"{spider.base_url}{link[1]}"
 
 
 def test_spider_parse_job_yields_correct_item(spider):
     response_mock = Mock(spec=Response)
     response_mock.css().get.return_value = "Test Value"
-    response_mock.css().getall.return_value = ["Test Value1", "Test Value2"]
     response_mock.url = "http://testsite.com"
     item = [*spider.parse_job(response_mock)][0]
     assert item["company"] == "Test Value"
-    assert item["location"] == "Test Value2"
+    assert item["location"] == "Test Value"
     assert item["position"] == "Test Value"
     assert item["url"] == "http://testsite.com"
     assert item["country"] == "USA"

@@ -8,7 +8,7 @@ test:
 	pipenv run pytest -v
 
 ci-test:
-	cd src && pipenv run scrapy check
+	cd src && pipenv run scrapy check -v
 	pipenv run coverage run --source='.' -m pytest -v
 	pipenv run coverage xml -o cobertura.xml
 
