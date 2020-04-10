@@ -1,22 +1,23 @@
 # pylint: disable=no-member
 # Pylint doesn't know that mutliple_crawlers.process
 # is a mock object, so disable warning
-import unittest
 
+import pytest
 from mock import patch, call
 
 from jobs_scraping.spiders.glassdoor_spider import GlassdoorSpider
 from scrap import MultipleCrawlers
 
 
-class ScrapScripTests(unittest.TestCase):
+@pytest.mark.scrap_script
+class TestScrapScript:
     @patch("scrap.CrawlerProcess")
     @patch("scrap.get_project_settings")
     def test_process_is_set_when_initializing(self, get_settings_mock, process_mock):
         get_settings_mock.return_value = {"TEST"}
         multiple_crawlers = MultipleCrawlers()
         process_mock.assert_called_once_with({"TEST"})
-        self.assertIsNotNone(multiple_crawlers.process)
+        assert multiple_crawlers.process is not None
 
     @patch("scrap.CrawlerProcess")
     def test_can_add_one_spider(self, process_mock):
