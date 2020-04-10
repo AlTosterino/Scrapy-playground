@@ -7,19 +7,21 @@ from scrapy.spiders import CrawlSpider, Rule
 from jobs_scraping.items import JobItem
 
 
-class GlassdoorSpider(CrawlSpider):
+class WorkpolisSpider(CrawlSpider):
     """Spider for extracting Python job offers from Glassdoor."""
 
-    name = "glassdoor_spider"
-    file_name = "Glassdoor"
+    name = "workpolis_spider"
+    file_name = "Workpolis"
     initial_country = "USA"
 
-    start_urls = ["https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm"]
-    base_url = "https://www.glassdoor.com/"
+    start_urls = ["https://www.workopolis.com/jobsearch/find-jobs?ak=python"]
+    base_url = "https://www.workopolis.com"
 
     rules = (
         Rule(
-            LinkExtractor(allow=(), restrict_css=".next"),
+            LinkExtractor(
+                allow=(), restrict_css="a.Pagination-link.Pagination-link--next"
+            ),
             callback="parse_page",
             follow=True,
         ),
@@ -45,15 +47,15 @@ class GlassdoorSpider(CrawlSpider):
         """
         Method for gathering job links.
 
-        @url https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm
+        @url https://www.workopolis.com/jobsearch/find-jobs?ak=python
 
-        @returns requests 60
+        @returns requests 20
         """
         if self.current_page > self.max_page:
             raise CloseSpider("Spider has reached maximum number of pages")
-        links = response.css("a.jobLink.jobInfoItem.jobTitle::attr(href)").getall()
+        links = response.css(".JobCard-titleLink::attr(href)").getall()
         for link in links:
-            absolute_url = self.base_url + link[1:]
+            absolute_url = self.base_url + link
             yield scrapy.Request(absolute_url, callback=self.parse_job)
         self.current_page += 1
 
@@ -61,16 +63,16 @@ class GlassdoorSpider(CrawlSpider):
         """
         Method for gathering specific job information.
         
-        @url https://www.glassdoor.com/job-listing/fullstack-python-engineer-streetshares-JV_IC1130404_KO0,25_KE26,38.htm?jl=3147380862&ctt=1586168334926
+        @url https://www.workopolis.com/jobsearch/viewjob/oy-oTUTSIxJY3CCk7w1og3e5-iDqxDO6j4_oEIRs0o_amhctJv7j-Q?ak=python&l=&isp=0
 
         @returns items 1
 
         @scrapes position company location url country
         """
         item = JobItem()
-        item["position"] = response.css("h2.mt-0.mb-xsm.strong::text").get()
-        item["company"] = response.css("span.strong.ib::text").get()
-        item["location"] = response.css("span.subtle.ib::text").getall()[1]
+        item["position"] = response.css(".ViewJobHeader-title::text").get()
+        item["company"] = response.css(".ViewJobHeader-company::text").get()
+        item["location"] = response.css(".ViewJobHeader-property::text").get()
         item["url"] = response.url
         item["country"] = self.initial_country
         yield item
