@@ -1,12 +1,10 @@
-import unittest
-
 import pytest
 
 from jobs_scraping.items import JobItem
 
 
 @pytest.mark.job_item
-class JobItemTests(unittest.TestCase):
+class TestJobItem:
     def test_all_values_are_setup_correctly(self):
         item = JobItem()
         item["position"] = "Test position"
@@ -15,8 +13,8 @@ class JobItemTests(unittest.TestCase):
         item["location"] = "Some test location"
         item["country"] = "Some country"
 
-        self.assertEqual(item["position"], "Test position")
-        self.assertEqual(item["url"], "http://testurl.com")
-        self.assertEqual(item["company"], "Some test company")
-        self.assertEqual(item["location"], "Some test location")
-        self.assertEqual(item["country"], "Some country")
+        assert item["position"] == "Test position"
+        assert item["url"] == "http://testurl.com"
+        assert item["company"] == "Some test company"
+        assert item["location"] == "Some test location"
+        assert item["country"] == "Some country"

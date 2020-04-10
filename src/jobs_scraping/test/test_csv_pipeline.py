@@ -1,4 +1,3 @@
-import unittest
 import pytest
 from mock import Mock, MagicMock, patch, mock_open
 from datetime import datetime
@@ -11,23 +10,25 @@ DATE_TIME = datetime(2020, 1, 1, 0, 0, 0)
 
 
 @pytest.mark.csv_pipeline
-class CSVExportPipelineTests(unittest.TestCase):
-    def setUp(self):
-        self.csvpipeline = CSVExportPipeline()
+class TestCSVExportPipeline:
+    @pytest.fixture
+    def csvpipeline(self):
+        csvpipeline = CSVExportPipeline()
+        return csvpipeline
 
     @patch("jobs_scraping.pipelines.datetime")
     def test_datetime_is_set_correctly(self, mock_datetime):
         mock_datetime.now.return_value = DATE_TIME
         csvpipeline = CSVExportPipeline()
-        self.assertEqual(csvpipeline.file_name, DATE_TIME.strftime("%m-%d-%Y %H-%M-%S"))
+        assert csvpipeline.file_name == DATE_TIME.strftime("%m-%d-%Y %H-%M-%S")
 
-    def test_file_is_none_when_spider_was_not_opened(self):
-        self.assertIsNone(self.csvpipeline.file)
+    def test_file_is_none_when_spider_was_not_opened(self, csvpipeline):
+        assert csvpipeline.file is None
 
     @patch("jobs_scraping.pipelines.CsvItemExporter")
-    def test_export_item_is_called_with_correct_item(self, exporter_mock):
-        process_item_mock = Mock(side_effect=self.csvpipeline.process_item)
-        self.csvpipeline.exporter = exporter_mock
+    def test_export_item_is_called_with_correct_item(self, exporter_mock, csvpipeline):
+        process_item_mock = Mock(side_effect=csvpipeline.process_item)
+        csvpipeline.exporter = exporter_mock
         item_mock = MagicMock(spec=JobItem)
         spider_mock = Mock(spec=GlassdoorSpider)
         process_item_mock(item_mock, spider_mock)
@@ -49,13 +50,9 @@ class CSVExportPipelineTests(unittest.TestCase):
                 f'{spider_mock.file_name} {DATE_TIME.strftime("%m-%d-%Y %H-%M-%S")}.csv'
             )
             mock_file.assert_called_once_with(generated_file_name, "wb")
-            self.assertEqual(
-                csvpipeline.file_name, generated_file_name,
-            )
+            assert csvpipeline.file_name == generated_file_name
             exporter_mock.assert_called_once()
-            self.assertEqual(
-                csvpipeline.exporter.fields_to_export, JobItem.fields_to_export,
-            )
+            assert csvpipeline.exporter.fields_to_export == JobItem.fields_to_export
             csvpipeline.exporter.start_exporting.assert_called_once()
 
     @patch("jobs_scraping.pipelines.os")
