@@ -3,7 +3,12 @@ from typing import Tuple
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
-from jobs_scraping.spiders import glassdoor_spider, indeed_spider
+from jobs_scraping.spiders import (
+    glassdoor_spider,
+    indeed_spider,
+    workpolis_spider,
+    totaljobs_spider,
+)
 
 
 class MultipleCrawlers:
@@ -62,6 +67,38 @@ if __name__ == "__main__":  # pragma: no cover
             {
                 "start_urls": ["https://indeed.com/q-q-React-jobs.html"],
                 "file_name": "Indeed REACT",
+            },
+        ),
+        (
+            workpolis_spider.WorkpolisSpider,
+            {
+                "start_urls": [
+                    "https://www.workopolis.com/jobsearch/find-jobs?ak=python"
+                ],
+                "file_name": "Workpolis PYTHON",
+            },
+        ),
+        (
+            workpolis_spider.WorkpolisSpider,
+            {
+                "start_urls": [
+                    "https://www.workopolis.com/jobsearch/find-jobs?ak=python"
+                ],
+                "file_name": "Workpolis REACT",
+            },
+        ),
+        (
+            totaljobs_spider.TotaljobsSpider,
+            {
+                "start_urls": ["https://www.totaljobs.com/jobs/python"],
+                "file_name": "Totaljobs PYTHON",
+            },
+        ),
+        (
+            totaljobs_spider.TotaljobsSpider,
+            {
+                "start_urls": ["https://www.totaljobs.com/jobs/react"],
+                "file_name": "Totaljobs REACT",
             },
         ),
     )

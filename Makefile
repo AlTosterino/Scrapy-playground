@@ -14,3 +14,6 @@ ci-test:
 
 run-spider:
 	cd src && pipenv run scrapy crawl $(SPIDER)
+
+run-all-spiders:
+	pipenv run src/scrap.py
