@@ -73,6 +73,6 @@ class WorkpolisSpider(CrawlSpider):
         item["position"] = response.css(".ViewJobHeader-title::text").get()
         item["company"] = response.css(".ViewJobHeader-company::text").get()
         item["location"] = response.css(".ViewJobHeader-property::text").get()
-        item["url"] = response.url
+        item["link_to_job_link"] = response.url
         item["country"] = self.initial_country
         yield item

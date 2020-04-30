@@ -54,7 +54,7 @@ class IndeedSpider(CrawlSpider):
         """
         if self.current_page > self.max_page:
             raise CloseSpider("Spider has reached maximum number of pages")
-        links = response.css("div.title>a::attr(href)").getall()
+        links = response.css("a.jobtitle::attr(href)").getall()
         for link in links:
             absolute_url = self.base_url + link[1:]
             yield scrapy.Request(absolute_url, callback=self.parse_job)
@@ -84,6 +84,6 @@ class IndeedSpider(CrawlSpider):
                 "//div[starts-with(@class, 'jobsearch-InlineCompanyRating')]/div[not(@class)]"
             ).get()
         ).strip()
-        item["url"] = response.url
+        item["link_to_job_link"] = response.url
         item["country"] = self.initial_country
         yield item

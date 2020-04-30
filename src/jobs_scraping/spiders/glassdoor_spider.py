@@ -27,6 +27,8 @@ class GlassdoorSpider(CrawlSpider):
 
     custom_settings = {
         "ITEM_PIPELINES": {"jobs_scraping.pipelines.CSVExportPipeline": 300},
+        # "CONCURRENT_REQUESTS": 6,
+        # "DOWNLOAD_DELAY": 0.5
     }
 
     def __init__(self, *args, **kwargs):
@@ -68,9 +70,9 @@ class GlassdoorSpider(CrawlSpider):
         @scrapes position company location url country
         """
         item = JobItem()
-        item["position"] = response.css("h2.mt-0.mb-xsm.strong::text").get()
-        item["company"] = response.css("span.strong.ib::text").get()
-        item["location"] = response.css("span.subtle.ib::text").getall()[1]
-        item["url"] = response.url
+        item["position"] = response.css(".css-ur1szg > .css-17x2pwl::text").get()
+        item["company"] = response.css(".css-ur1szg > .css-16nw49e::text").get()
+        item["location"] = response.css(".css-ur1szg > .css-13et3b1::text").get()
+        item["link_to_job_link"] = response.url
         item["country"] = self.initial_country
         yield item

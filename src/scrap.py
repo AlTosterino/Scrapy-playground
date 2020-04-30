@@ -44,31 +44,33 @@ if __name__ == "__main__":  # pragma: no cover
                     "https://www.glassdoor.com/Job/python-jobs-SRCH_KO0,6.htm"
                 ],
                 "file_name": "Glassdoor PYTHON",
+                "stop_page": 10
             },
         ),
-        (
-            glassdoor_spider.GlassdoorSpider,
-            {
-                "start_urls": [
-                    "https://www.glassdoor.com/Job/react-jobs-SRCH_KO0,5.htm"
-                ],
-                "file_name": "Glassdoor REACT",
-            },
-        ),
+        # (
+        #     glassdoor_spider.GlassdoorSpider,
+        #     {
+        #         "start_urls": [
+        #             "https://www.glassdoor.com/Job/react-jobs-SRCH_KO0,5.htm"
+        #         ],
+        #         "file_name": "Glassdoor REACT",
+        #     },
+        # ),
         (
             indeed_spider.IndeedSpider,
             {
                 "start_urls": ["https://indeed.com/q-q-Python-jobs.html"],
                 "file_name": "Indeed PYTHON",
+                "stop_page": 10
             },
         ),
-        (
-            indeed_spider.IndeedSpider,
-            {
-                "start_urls": ["https://indeed.com/q-q-React-jobs.html"],
-                "file_name": "Indeed REACT",
-            },
-        ),
+        # (
+        #     indeed_spider.IndeedSpider,
+        #     {
+        #         "start_urls": ["https://indeed.com/q-q-React-jobs.html"],
+        #         "file_name": "Indeed REACT",
+        #     },
+        # ),
         (
             workpolis_spider.WorkpolisSpider,
             {
@@ -76,31 +78,33 @@ if __name__ == "__main__":  # pragma: no cover
                     "https://www.workopolis.com/jobsearch/find-jobs?ak=python"
                 ],
                 "file_name": "Workpolis PYTHON",
+                "stop_page": 10
             },
         ),
-        (
-            workpolis_spider.WorkpolisSpider,
-            {
-                "start_urls": [
-                    "https://www.workopolis.com/jobsearch/find-jobs?ak=python"
-                ],
-                "file_name": "Workpolis REACT",
-            },
-        ),
-        (
-            totaljobs_spider.TotaljobsSpider,
-            {
-                "start_urls": ["https://www.totaljobs.com/jobs/python"],
-                "file_name": "Totaljobs PYTHON",
-            },
-        ),
-        (
-            totaljobs_spider.TotaljobsSpider,
-            {
-                "start_urls": ["https://www.totaljobs.com/jobs/react"],
-                "file_name": "Totaljobs REACT",
-            },
-        ),
+        # (
+        #     workpolis_spider.WorkpolisSpider,
+        #     {
+        #         "start_urls": [
+        #             "https://www.workopolis.com/jobsearch/find-jobs?ak=python"
+        #         ],
+        #         "file_name": "Workpolis REACT",
+        #     },
+        # ),
+        # (
+        #     totaljobs_spider.TotaljobsSpider,
+        #     {
+        #         "start_urls": ["https://www.totaljobs.com/jobs/python"],
+        #         "file_name": "Totaljobs PYTHON",
+        #         "stop_page": 10
+        #     },
+        # ),
+        # (
+        #     totaljobs_spider.TotaljobsSpider,
+        #     {
+        #         "start_urls": ["https://www.totaljobs.com/jobs/react"],
+        #         "file_name": "Totaljobs REACT",
+        #     },
+        # ),
     )
     multiple_crawlers = MultipleCrawlers()
     multiple_crawlers.create_crawlers(spiders)

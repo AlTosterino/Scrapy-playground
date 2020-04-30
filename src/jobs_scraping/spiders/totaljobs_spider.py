@@ -102,5 +102,5 @@ class TotaljobsSpider(CrawlSpider):
             item["location"] = "No location"
         item["company"] = response.css("#companyJobsLink::text").get()
         item["country"] = self.initial_country
-        item["url"] = response.url
+        item["link_to_job_link"] = response.url
         yield item
